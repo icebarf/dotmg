@@ -3,18 +3,17 @@
 #+date: 22 June 2023
 #+author: Amrit
 
-The goal of this program is to keep (dot)files in $HOME version
-controlled and in sync using a version control program, such as
-~git~. This isn't only specific to files but rather all directories
-and files in ~$HOME~.
-This document reflects my preferences which will affect the
-implementation of the program.
+* Introduction
+The goal of this program is to keep (dot)files in $HOME synced using a
+version control program, such as ~git~. This isn't only specific to files
+but rather all directories and files in ~$HOME~ as the program name may indicate.
+This document reflects my preferences which will affect the implementation of the program.
 
 * How to configure ~dotmg~?
-The goal is to have a ~config~ file in
+The program intends to keep a ~config~ file in
 ~${XDG_CONFIG_HOME}/dotmg/~. My initial goal is to only have
 a list of repositories in there and pass other configuration
-parameters exist in the user's environment.
+parameters via the user's environment.
 
 A hypothetical list of environment variables that affect ~dotmg~
 runtime:
@@ -47,7 +46,7 @@ by copying them over to ~$DOTMG_REPO_DIR~ and then performing a
 series of version control commands that would get them ready to
 be synced to a remote repository. We could also possibly support
 the copying of ~DOTMG_REPO_DIR~ to a local directory as an optional
-parameter-to-a-sync-sub-command-that-exists-in-dotmg.
+parameter to a sync sub command that exists in dotmg.
 
 * Adding files
 ** Usage
@@ -58,20 +57,23 @@ Exemplary use of ~dotmg~ may look like as follows:
 - ~dotmg add Pictures/Wallpapers/mountains.png~
 
 ** Copying Operation
-~dotmg~ shall then strip away the user's ~$HOME~ expansion in path and re-create the directory
-structure in ~$DOTMG_REPO_DIR~. For arguments where the home directory is not directly present
-in the path, e.g dotmg is run in a sub-directory inside ~$HOME~ then dotmg will simply re-create
-the directory structure as-is and not check if the argument is a sub-directory in $HOME.
+
+After ~dotmg~ receives the argument, it shall then strip away the user's ~$HOME~ expansion in
+path and re-create the directory structure in ~$DOTMG_REPO_DIR~ . For arguments where the
+home directory is not directly present in the path, e.g dotmg is run in a sub-directory
+inside ~$HOME~ then dotmg will simply re-create the directory structure as-is and not
+check if the argument is a sub-directory in $HOME.
 
 Example: ~Pictures/Wallpapers~ directory might be present in ~$HOME/Media/Pictures/Wallpapers~,
-then dotmg will not create the ~Media~ directory inside ~$DOTMG_REPO_DIR~ and instead create
+then dotmg will not create the ~Media~ directory inside ~$DOTMG_REPO_DIR~ and will instead create
 ~Pictures/Wallpapers~ directories and then copy over the ~mountains.png~ file to that directory.
 
 ** Maintaining a ~config~
-dotmg also maintains a list of "added" directories or files in ~$DOTMG_CONFIG_DIR/config~. When
+
+dotmg maintains a list of "added" directories or files in ~$DOTMG_CONFIG_DIR/config~. When
 ~dotmg add~ is run, after performing the copy in the aforementioned manner, it checks if the same
 argument is present in ~config~, if it is not present then it is added to the newline separated
-list. Although, if the file or directory to added isn't present directly in ~$HOME~ but is a sub-
+list. Although, if the file or directory to be added isn't present directly in ~$HOME~ but is a sub-
 directory, then ~dotmg~ may use ~find~ to locate the full path to that directory/file and then
 add it to the ~config~ to make the ~sync~ command's job easier.
 
@@ -81,9 +83,9 @@ add it to the ~config~ to make the ~sync~ command's job easier.
 
 - ~git add~ the copied over argument when doing line-by-line read. Commit when operation is finished.
 - ~git add .~ the copied over content after everything is done. Now either the ~.~ argument can be
-	passed over to git, or ~dotmg~ could create an array and pass it as argument to git which will only
-	add and commit the files to the repository. This latter behavior allows some flexibility from the
-	user side which I have not explored yet.
+	passed over to git, or ~dotmg~ could create an array from the ~config~ file and pass it as an argument
+	to git which will only add and commit the files to the repository. This latter behavior allows some
+	flexibility from the user side which I have not explored yet.
 
 dotmg could optionally push to remote as well, I have not decided yet if we want the "push" to
 be a separate command or just a part of the ~dotmg sync~ command.
