@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2023-06-23 Fri 11:48 -->
+<!-- 2023-06-23 Fri 15:59 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>DOTMG Architecture</title>
@@ -202,38 +202,31 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#orge77fcac">1. Goal</a></li>
-<li><a href="#org7c90e3f">2. How to configure <code>dotmg</code>?</a></li>
-<li><a href="#orgd021b3e">3. How should <code>dotmg</code> handle basic syncing of files.</a></li>
-<li><a href="#org1905600">4. Adding files</a>
+<li><a href="#org7718e07">1. How to configure <code>dotmg</code>?</a></li>
+<li><a href="#orge39c3f4">2. How should <code>dotmg</code> handle basic syncing of files.</a></li>
+<li><a href="#orgd73336a">3. Adding files</a>
 <ul>
-<li><a href="#orgaa7b7ed">4.1. Usage</a></li>
-<li><a href="#org2fcb90b">4.2. Copying Operation</a></li>
-<li><a href="#org67beccb">4.3. Maintaining a <code>config</code></a></li>
+<li><a href="#orgea6f2df">3.1. Usage</a></li>
+<li><a href="#orgf8ff149">3.2. Copying Operation</a></li>
+<li><a href="#orgd9f0274">3.3. Maintaining a <code>config</code></a></li>
 </ul>
 </li>
-<li><a href="#org4c26231">5. Syncing Files</a></li>
+<li><a href="#orgf47b528">4. Syncing Files</a></li>
 </ul>
 </div>
 </div>
-
-<div id="outline-container-orge77fcac" class="outline-2">
-<h2 id="orge77fcac"><span class="section-number-2">1.</span> Goal</h2>
-<div class="outline-text-2" id="text-1">
 <p>
-THe goal of this program is to keep (dot)files in $HOME version
+The goal of this program is to keep (dot)files in $HOME version
 controlled and in sync using a version control program, such as
 <code>git</code>. This isn't only specific to files but rather all directories
 and files in <code>$HOME</code>.
 This document reflects my preferences which will affect the
 implementation of the program.
 </p>
-</div>
-</div>
 
-<div id="outline-container-org7c90e3f" class="outline-2">
-<h2 id="org7c90e3f"><span class="section-number-2">2.</span> How to configure <code>dotmg</code>?</h2>
-<div class="outline-text-2" id="text-2">
+<div id="outline-container-org7718e07" class="outline-2">
+<h2 id="org7718e07"><span class="section-number-2">1.</span> How to configure <code>dotmg</code>?</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 The goal is to have a <code>config</code> file in
 <code>${XDG_CONFIG_HOME}/dotmg/</code>. My initial goal is to only have
@@ -261,7 +254,7 @@ mentioned gymnastics.</li>
 An example <code>config</code> file:
 </p>
 <div class="org-src-container">
-<pre class="src src-shell" id="org1ed5c41">$HOME/.config/sway
+<pre class="src src-shell" id="org9ccb1bf">$HOME/.config/sway
 $HOME/.config/nvim
 $HOME/.emacs.d/
 $HOME/.zshrc
@@ -276,9 +269,9 @@ This file contains a newline separated list of files and directories.
 </div>
 </div>
 
-<div id="outline-container-orgd021b3e" class="outline-2">
-<h2 id="orgd021b3e"><span class="section-number-2">3.</span> How should <code>dotmg</code> handle basic syncing of files.</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-orge39c3f4" class="outline-2">
+<h2 id="orge39c3f4"><span class="section-number-2">2.</span> How should <code>dotmg</code> handle basic syncing of files.</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 The idea here is to keep either entire directories or files in sync
 by copying them over to <code>$DOTMG_REPO_DIR</code> and then performing a
@@ -290,13 +283,13 @@ parameter-to-a-sync-sub-command-that-exists-in-dotmg.
 </div>
 </div>
 
-<div id="outline-container-org1905600" class="outline-2">
-<h2 id="org1905600"><span class="section-number-2">4.</span> Adding files</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgd73336a" class="outline-2">
+<h2 id="orgd73336a"><span class="section-number-2">3.</span> Adding files</h2>
+<div class="outline-text-2" id="text-3">
 </div>
-<div id="outline-container-orgaa7b7ed" class="outline-3">
-<h3 id="orgaa7b7ed"><span class="section-number-3">4.1.</span> Usage</h3>
-<div class="outline-text-3" id="text-4-1">
+<div id="outline-container-orgea6f2df" class="outline-3">
+<h3 id="orgea6f2df"><span class="section-number-3">3.1.</span> Usage</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 Exemplary use of <code>dotmg</code> may look like as follows:
 </p>
@@ -309,9 +302,9 @@ Exemplary use of <code>dotmg</code> may look like as follows:
 </div>
 </div>
 
-<div id="outline-container-org2fcb90b" class="outline-3">
-<h3 id="org2fcb90b"><span class="section-number-3">4.2.</span> Copying Operation</h3>
-<div class="outline-text-3" id="text-4-2">
+<div id="outline-container-orgf8ff149" class="outline-3">
+<h3 id="orgf8ff149"><span class="section-number-3">3.2.</span> Copying Operation</h3>
+<div class="outline-text-3" id="text-3-2">
 <p>
 <code>dotmg</code> shall then strip away the user's <code>$HOME</code> expansion in path and re-create the directory
 structure in <code>$DOTMG_REPO_DIR</code>. For arguments where the home directory is not directly present
@@ -327,9 +320,9 @@ then dotmg will not create the <code>Media</code> directory inside <code>$DOTMG_
 </div>
 </div>
 
-<div id="outline-container-org67beccb" class="outline-3">
-<h3 id="org67beccb"><span class="section-number-3">4.3.</span> Maintaining a <code>config</code></h3>
-<div class="outline-text-3" id="text-4-3">
+<div id="outline-container-orgd9f0274" class="outline-3">
+<h3 id="orgd9f0274"><span class="section-number-3">3.3.</span> Maintaining a <code>config</code></h3>
+<div class="outline-text-3" id="text-3-3">
 <p>
 dotmg also maintains a list of "added" directories or files in <code>$DOTMG_CONFIG_DIR/config</code>. When
 <code>dotmg add</code> is run, after performing the copy in the aforementioned manner, it checks if the same
@@ -342,9 +335,9 @@ add it to the <code>config</code> to make the <code>sync</code> command's job ea
 </div>
 </div>
 
-<div id="outline-container-org4c26231" class="outline-2">
-<h2 id="org4c26231"><span class="section-number-2">5.</span> Syncing Files</h2>
-<div class="outline-text-2" id="text-5">
+<div id="outline-container-orgf47b528" class="outline-2">
+<h2 id="orgf47b528"><span class="section-number-2">4.</span> Syncing Files</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 <code>dotmg sync</code> reads <code>$DOTMG_CONFIG_DIR/config</code> line by line and performs the same copying operation as
 <code>dotmg add</code> and then it could either of the following operations:
@@ -368,7 +361,7 @@ be a separate command or just a part of the <code>dotmg sync</code> command.
 <div id="postamble" class="status">
 <p class="date">Date: 22 June 2023</p>
 <p class="author">Author: Amrit</p>
-<p class="date">Created: 2023-06-23 Fri 11:48</p>
+<p class="date">Created: 2023-06-23 Fri 15:59</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

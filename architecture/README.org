@@ -3,8 +3,7 @@
 #+date: 22 June 2023
 #+author: Amrit
 
-* Goal
-THe goal of this program is to keep (dot)files in $HOME version
+The goal of this program is to keep (dot)files in $HOME version
 controlled and in sync using a version control program, such as
 ~git~. This isn't only specific to files but rather all directories
 and files in ~$HOME~.
