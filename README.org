@@ -1,0 +1,6 @@
+#+title: dotmg
+#+author: Amrit
+#+description: A $HOME manager.
+
+* dotmg
+placeholder text
