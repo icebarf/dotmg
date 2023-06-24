@@ -71,3 +71,10 @@ dont-ignore() {
 				done
 		done		
 }
+
+run () {
+		[[ "$1" == "init" ]] && init "$HOUSE" && exit 0
+		[[ "$1" == "add" ]] && shift && dont-ignore "$@" && exit 0
+}
+
+run "$@"
