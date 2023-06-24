@@ -1,0 +1,73 @@
+#!/bin/bash
+
+# Internal variable that will refer to the $HOME directory
+[[ -z "$HOUSE" ]] && declare -g HOUSE=$HOME
+
+# Some basic functions taken from pure-bash-bible by dylan araps.
+
+split() {
+		# Usage: split "string" "delimiter" array_var
+		local -n arr=$3
+		IFS=$'\n' read -d "" -ra arr <<< "${1//$2/$'\n'}"
+}
+
+# dotmg implementation
+
+error () {
+		printf "dotmg: %s" "$@"
+		exit
+}
+
+write-dont-ignore() {
+		mapfile -t gitignore < .gitignore
+		for line in "${gitignore[@]}"; do
+				if [[ "$line" == "!$1" ]]; then
+						return
+				fi
+				printf "%s - %s\n" "$line"  "$1"
+		done		
+		
+		printf "!%s\n" "$1" >> .gitignore
+}
+
+write-ignore () {
+		mapfile -t gitignore < .gitignore
+		for line in "${gitignore[@]}"; do
+				if [[ "$line" == "$1/*" ]]; then
+						return
+				fi
+		done		
+		
+		printf "%s/*\n" "$1" >> .gitignore
+}
+
+init() {
+		cd "$1" || error "init failed\n"
+		git init
+		git branch -m main
+		touch .gitignore
+		printf "/*\n" > .gitignore
+}
+
+dont-ignore() {
+		cd "$HOUSE" || error "could not switch to $HOME"
+		dirlist=""
+		for arg in "$@"; do
+				declare -a dirs
+				split "$arg" "/" dirs
+				declare -i len=0
+				len=${#dirs[@]}-1
+				declare -i cnt=0
+				for dir in "${dirs[@]}"; do
+						dirlist="$dirlist/$dir"
+
+						if [[ (( $cnt == "$len" )) ]]; then
+								write-dont-ignore "$dirlist"
+								break
+						fi
+						write-dont-ignore "$dirlist"
+						write-ignore "$dirlist"
+						((cnt++))
+				done
+		done		
+}
