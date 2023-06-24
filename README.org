@@ -35,7 +35,7 @@ This ~$HOUSE~ directory is where ~dotmg~ always operates with
 ~init-gitignore~ and ~clean-newlines~ commands being exceptions.
 They look for a ~.gitignore~ in the current directory.
 
-* TODO Work in Progress
-- [-] More error checking.
-- [-] Build system that installs the script.
-- [-] Manual Pages
+* Work in Progress
+- [ ] More error checking.
+- [ ] Build system that installs the script.
+- [ ] Manual Pages
