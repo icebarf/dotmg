@@ -36,6 +36,6 @@ This ~$HOUSE~ directory is where ~dotmg~ always operates with
 They look for a ~.gitignore~ in the current directory.
 
 * TODO Work in Progress
-- [ ] More error checking.
-- [ ] Build system that installs the script.
-- [ ] Manual Pages
+- [-] More error checking.
+- [-] Build system that installs the script.
+- [-] Manual Pages
