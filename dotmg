@@ -12,8 +12,8 @@ split() {
 }
 
 strip-all() {
-    # Usage: strip_all "string" "pattern"
-    printf '%s\n' "${1//$2}" > .gitignore
+		# Usage: strip_all "string" "pattern"
+		printf '%s\n' "${1//$2}" > .gitignore
 }
 
 # dotmg implementation
@@ -82,10 +82,8 @@ dotmg-dont-ignore() {
 				declare -i cnt=0
 				for dir in "${dirs[@]}"; do
 						dirlist="$dirlist/$dir"
-						
+						dont-ignore-this-dir "$dirlist"
 						if [[ (( $cnt == "$len" )) ]]; then
-								dont-ignore-this-dir "$dirlist"
-
 								# this is the last arg, therefore we want to track
 								# everything in that directory. The remove-line
 								# function checks if such a line in .gitignore exists
@@ -106,8 +104,6 @@ dotmg-dont-ignore() {
 								remove-lines-after "$dirlist"
 								break
 						fi
-						
-						dont-ignore-this-dir "$dirlist"
 						ignore-all-subdirs "$dirlist"
 						((cnt++))
 				done
@@ -117,8 +113,8 @@ dotmg-dont-ignore() {
 dotmg-run () {
 		[[ "$1" == "init" ]] && dotmg-init "$HOUSE" && exit 0
 		[[ "$1" == "init-gitignore" ]] && write-base-gitignore && exit 0
-		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && exit 0
-		[[ "$1" == "clean-newlines" ]] && remove-empty-newlines && exit 0
+		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && remove-empty-newlines && exit 0
+		[[ "$1" == "clean-newlines" ]] && remove-empty-newlines && exit 0 # seems useless right now. might remove later.
 }
 
 dotmg-run "$@"
