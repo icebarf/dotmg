@@ -11,26 +11,35 @@ split() {
 		IFS=$'\n' read -d "" -ra arr <<< "${1//$2/$'\n'}"
 }
 
+strip-all() {
+    # Usage: strip_all "string" "pattern"
+    printf '%s\n' "${1//$2}" > .gitignore
+}
+
 # dotmg implementation
+
+# utilities
+write-base-gitignore() {
+		printf "/*\n" > .gitignore
+}
 
 error () {
 		printf "dotmg: %s" "$@"
 		exit
 }
 
-write-dont-ignore() {
+dont-ignore-this-dir() {
 		mapfile -t gitignore < .gitignore
 		for line in "${gitignore[@]}"; do
 				if [[ "$line" == "!$1" ]]; then
 						return
 				fi
-				printf "%s - %s\n" "$line"  "$1"
 		done		
 		
 		printf "!%s\n" "$1" >> .gitignore
 }
 
-write-ignore () {
+ignore-all-subdirs () {
 		mapfile -t gitignore < .gitignore
 		for line in "${gitignore[@]}"; do
 				if [[ "$line" == "$1/*" ]]; then
@@ -41,15 +50,28 @@ write-ignore () {
 		printf "%s/*\n" "$1" >> .gitignore
 }
 
-init() {
+remove-empty-newlines() {
+		IFS=$'\n' read -d "" -ra gitignore < ".gitignore"
+		rm .gitignore
+		for line in "${gitignore[@]}"; do
+				printf "%s\n" "$line" >> .gitignore
+		done
+}
+
+remove-lines-after() {
+		strip-all "$(<.gitignore)" "$1\/*"
+}
+
+# dotmg
+
+dotmg-init() {
 		cd "$1" || error "init failed\n"
 		git init
 		git branch -m main
-		touch .gitignore
-		printf "/*\n" > .gitignore
+		write-base-gitignore
 }
 
-dont-ignore() {
+dotmg-dont-ignore() {
 		cd "$HOUSE" || error "could not switch to $HOME"
 		dirlist=""
 		for arg in "$@"; do
@@ -60,21 +82,43 @@ dont-ignore() {
 				declare -i cnt=0
 				for dir in "${dirs[@]}"; do
 						dirlist="$dirlist/$dir"
-
+						
 						if [[ (( $cnt == "$len" )) ]]; then
-								write-dont-ignore "$dirlist"
+								dont-ignore-this-dir "$dirlist"
+
+								# this is the last arg, therefore we want to track
+								# everything in that directory. The remove-line
+								# function checks if such a line in .gitignore exists
+								# and removes it. It also removes lines with anything
+								# after the / in the last arg.
+
+								# Example: gitignore has .config/nvim/init.lua added
+								# using dotmg but the directory has other files as
+								# well that aren't tracked. Say we perform
+								# `dotmg add .config/nvim`, then dotmg will see that
+								# the .config/nvim folder is the last argument and thus
+								# it's implied everything in that folder is to be tracked
+								# it will then remove any lines in gitignore that are as
+								# follows:
+								# .config/nvim/*
+								# !.config/nvim/init.lua
+								# !.config/nvim/lua/
+								remove-lines-after "$dirlist"
 								break
 						fi
-						write-dont-ignore "$dirlist"
-						write-ignore "$dirlist"
+						
+						dont-ignore-this-dir "$dirlist"
+						ignore-all-subdirs "$dirlist"
 						((cnt++))
 				done
-		done		
+		done
 }
 
-run () {
-		[[ "$1" == "init" ]] && init "$HOUSE" && exit 0
-		[[ "$1" == "add" ]] && shift && dont-ignore "$@" && exit 0
+dotmg-run () {
+		[[ "$1" == "init" ]] && dotmg-init "$HOUSE" && exit 0
+		[[ "$1" == "init-gitignore" ]] && write-base-gitignore && exit 0
+		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && exit 0
+		[[ "$1" == "clean-newlines" ]] && remove-empty-newlines && exit 0
 }
 
-run "$@"
+dotmg-run "$@"
