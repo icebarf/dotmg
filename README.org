@@ -2,4 +2,40 @@
 #+author: Amrit
 #+description: A $HOME manager.
 
-placeholder text
+* Introduction
+
+This is a simple shell script that automates the generation
+of a ~.gitignore~ file in a (optionally user specified) home
+directory to make it easier for those who keep their ~$HOME~
+as a git repository and bother with manually adding/removing
+listings.
+
+The KISS principle is followed during the implementation of
+this script.
+
+* Commands
+
+- ~dotmg add file[s]|directory[ies]~: Add the specified arg
+	to not be ignored by ~git~.
+- ~dotmg init~: Initialises a git repository in ~$HOUSE~.
+	Writes a base ~.gitignore~ that ignores everything in that
+	directory.
+- ~dotmg init-gitignore~: Writes only a base ~.gitignore~ in
+	current directory.
+-  ~dotmg clean-newlines~: Cleans up any empty newlines that
+	may be present in ~.gitignore~ in the current directory.
+
+* Details
+
+** What is ~$HOUSE~?
+This is an optionally user-set environment variable that dotmg
+takes into account. If not specified, it defaults to ~$HOME~.
+
+This ~$HOUSE~ directory is where ~dotmg~ always operates with
+~init-gitignore~ and ~clean-newlines~ commands being exceptions.
+They look for a ~.gitignore~ in the current directory.
+
+* TODO Work in Progress
+- [ ] More error checking.
+- [ ] Build system that installs the script.
+- [ ] Manual Pages
