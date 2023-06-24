@@ -10,9 +10,6 @@ directory to make it easier for those who keep their ~$HOME~
 as a git repository and bother with manually adding/removing
 listings.
 
-The KISS principle is followed during the implementation of
-this script.
-
 * Commands
 
 - ~dotmg add file[s]|directory[ies]~: Add the specified arg
