@@ -9,7 +9,7 @@ dotmg - generate and manage .gitignore entries for the user
 dotmg command [argument...]
 
 * DESCRIPTION
-This is a simple bash that automates the generation and
+This is a simple bash program that automates the generation and
 management of a ~.gitignore~ file in order to make it
 easier for those who keep their ~$HOME~ as a git repository
 and bother with manually adding/removing listings.
