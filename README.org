@@ -10,6 +10,34 @@ directory to make it easier for those who keep their ~$HOME~
 as a git repository and bother with manually adding/removing
 listings.
 
+* Installation
+
+** Default Install
+
+This dotmg installs to ~/usr/bin~ 
+#+BEGIN_SRC
+# make install
+#+END_SRC
+
+** Different Prefix
+
+#+BEGIN_SRC
+# PREFIX=/usr/local make install
+#+END_SRC
+
+** Specify destination directory
+
+This is useful for package managers or installing to a non-~/~ (root) directory.
+
+#+BEGIN_SRC
+$ DESTDIR=$HOME/.local/ PREFIX=/usr/bin make install
+#+END_SRC
+
+#+BEGIN_QUOTE
+The ~uninstall~ target works the same way as the install target but deletes the
+~dotmg~ script.
+#+END_QUOTE
+
 * Commands
 
 - ~dotmg add file[s]|directory[ies]~: Add the specified arg
