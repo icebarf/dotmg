@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Internal variable that will refer to the $HOME directory
 [[ -z "$HOUSE" ]] && declare -g HOUSE=$HOME
@@ -19,13 +19,19 @@ strip-all() {
 # dotmg implementation
 
 # utilities
-write-base-gitignore() {
-		printf "/*\n" > .gitignore
-}
 
 error () {
-		printf "dotmg: %s" "$@"
+		printf "dotmg: %s\n" "$@"
 		exit
+}
+
+check-gitignore-exists() {
+		[[ ! (-r ".gitignore" && -w ".gitignore") ]] && \
+				error ".gitignore does not exist. Please generate it using init-gitignore or init commands."
+}
+
+write-base-gitignore() {
+		printf "/*\n" > .gitignore
 }
 
 dont-ignore-this-dir() {
@@ -65,14 +71,15 @@ remove-lines-after() {
 # dotmg
 
 dotmg-init() {
-		cd "$1" || error "init failed\n"
+		cd "$1" || error "init failed"
 		git init
 		git branch -m main
 		write-base-gitignore
 }
 
 dotmg-dont-ignore() {
-		cd "$HOUSE" || error "could not switch to $HOME"
+		cd "$HOUSE" || error "could not switch to ${HOUSE}"
+		check-gitignore-exists
 		dirlist=""
 		for arg in "$@"; do
 				declare -a dirs
@@ -114,7 +121,7 @@ dotmg-run () {
 		[[ "$1" == "init" ]] && dotmg-init "$HOUSE" && exit 0
 		[[ "$1" == "init-gitignore" ]] && write-base-gitignore && exit 0
 		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && remove-empty-newlines && exit 0
-		[[ "$1" == "clean-newlines" ]] && remove-empty-newlines && exit 0 # seems useless right now. might remove later.
+		[[ "$1" == "clean-newlines" ]] && check-gitignore-exists && remove-empty-newlines && exit 0 # seems useless right now. might remove later.
 }
 
 dotmg-run "$@"
