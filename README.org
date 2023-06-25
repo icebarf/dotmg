@@ -1,14 +1,13 @@
 #+title: dotmg
 #+author: Amrit
-#+description: A $HOME manager.
+#+description: .gitignore entry generator and manager.
 
 * Introduction
 
-This is a simple shell script that automates the generation
-of a ~.gitignore~ file in a (optionally user specified) home
-directory to make it easier for those who keep their ~$HOME~
-as a git repository and bother with manually adding/removing
-listings.
+This is a simple bash that automates the generation and
+management of a ~.gitignore~ file in order to make it
+easier for those who keep their ~$HOME~ as a git repository
+and bother with manually adding/removing listings.
 
 * Installation
 
@@ -53,12 +52,13 @@ The ~uninstall~ target works the same way as the install target but deletes the
 * Details
 
 ** What is ~$HOUSE~?
-This is an optionally user-set environment variable that dotmg
-takes into account. If not specified, it defaults to ~$HOME~.
 
-This ~$HOUSE~ directory is where ~dotmg~ always operates with
-~init-gitignore~ and ~clean-newlines~ commands being exceptions.
-They look for a ~.gitignore~ in the current directory.
+The $HOUSE variable is an internally-used variable that affects
+where dotmg will operate. If it is not set by the user, it defaults
+to $HOME.
+
+The commands init-gitignore and clean-newlines are exceptions to this
+variable. They operate in the directory where the command is executed.
 
 * Work in Progress
 - [ ] More error checking.

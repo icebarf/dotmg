@@ -1,0 +1,82 @@
+#+TITLE: DOTMG
+#+description: .gitignore entry generator and manager.
+
+* NAME
+
+dotmg - generate and manage .gitignore entries for the user
+
+* SYNOPSIS
+dotmg command [argument...]
+
+* DESCRIPTION
+This is a simple bash that automates the generation and
+management of a ~.gitignore~ file in order to make it
+easier for those who keep their ~$HOME~ as a git repository
+and bother with manually adding/removing listings.
+
+* COMMANDS
+** add
+Add the specified file or directory argument(s) to not be
+ignored by git.
+
+** init
+Intialises an git repository in $HOUSE and writes a base
+.gitignore that ignores everything in $HOUSE.
+
+** init-gitignore
+Writes only a base .gitignore in the current
+directory.
+
+** clean-newlines
+Removes any empty newlines that are present
+in .gitignore file in the current directory.
+
+* EXAMPLES
+
+** Adding Files
+$ dotmg add .config/nvim/init.lua
+
+$ dotmg add .config/sway
+
+$ dotmg add .local/bin/screenshot_custom
+
+$ dotmg add .emacs.d/init.el
+
+$ dotmg add .zshrc
+
+$ dotmg add .config/nvim/
+
+** Initialise
+
+$ dotmg init
+
+$ HOUSE=$HOME/backup/configs dotmg init
+
+$ export HOUSE=$HOME/backup/configs && dotmg init
+
+This is useful if you want the add command to follow
+suit. See notes for relevant information on the HOUSE
+environment variable.
+
+** Example Usage
+
+$ dotmg init
+
+$ dotmg add .config/stuff
+
+$ dotmg add .local/stuff/files
+
+$ git add .
+
+$ git commit -m "add new config files"
+
+$ git push origin master
+
+* NOTES
+
+The $HOUSE variable is an internally-used variable that affects
+where dotmg will operate. If it is not set by the user, it defaults
+to $HOME.
+
+The commands init-gitignore and clean-newlines are exceptions to this
+variable. They operate in the directory where the command is executed.
