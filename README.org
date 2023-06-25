@@ -9,33 +9,12 @@ management of a ~.gitignore~ file in order to make it
 easier for those who keep their ~$HOME~ as a git repository
 and bother with manually adding/removing listings.
 
-* Installation
+* Getting Help
 
-** Default Install
-
-This dotmg installs to ~/usr/bin~ 
+Please read the provided manual pages or the org document.
 #+BEGIN_SRC
-# make install
+$ man 1 dotmg
 #+END_SRC
-
-** Different Prefix
-
-#+BEGIN_SRC
-# PREFIX=/usr/local make install
-#+END_SRC
-
-** Specify destination directory
-
-This is useful for package managers or installing to a non-~/~ (root) directory.
-
-#+BEGIN_SRC
-$ DESTDIR=$HOME/.local/ PREFIX=/usr/bin make install
-#+END_SRC
-
-#+BEGIN_QUOTE
-The ~uninstall~ target works the same way as the install target but deletes the
-~dotmg~ script.
-#+END_QUOTE
 
 * Commands
 
@@ -49,6 +28,42 @@ The ~uninstall~ target works the same way as the install target but deletes the
 -  ~dotmg clean-newlines~: Cleans up any empty newlines that
 	may be present in ~.gitignore~ in the current directory.
 
+
+* Installation
+** Install Everything at default location
+make installs dotmg and manual pages in relevant
+directories inside ~/usr/~ 
+#+BEGIN_SRC
+# make all
+#+END_SRC
+
+** Default Install
+#+BEGIN_SRC
+# make install
+#+END_SRC
+
+** Different Prefix
+#+BEGIN_SRC
+# PREFIX=/usr/local make install
+#+END_SRC
+
+** Install manual pages as well
+#+BEGIN_SRC
+# make install-man
+#+END_SRC
+
+** Specify destination directory
+This is useful for package managers or installing
+to a non-~/~ (root) directory.
+#+BEGIN_SRC
+$ DESTDIR=$HOME/.local/ PREFIX=/usr/bin make install
+#+END_SRC
+
+#+BEGIN_QUOTE
+The ~uninstall~ target works the same way as the install target but deletes the
+~dotmg~ script.
+#+END_QUOTE
+
 * Details
 
 ** What is ~$HOUSE~?
@@ -59,8 +74,3 @@ to $HOME.
 
 The commands init-gitignore and clean-newlines are exceptions to this
 variable. They operate in the directory where the command is executed.
-
-* Work in Progress
-- [ ] More error checking.
-- [ ] Build system that installs the script.
-- [ ] Manual Pages
