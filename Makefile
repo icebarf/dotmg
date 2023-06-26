@@ -1,5 +1,5 @@
-DESTDIR?=""
-PREFIX?="/usr"
+DESTDIR?=
+PREFIX?=/usr
 
 BIN:=dotmg
 MANPAGE:=man/dotmg.1
