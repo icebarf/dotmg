@@ -6,7 +6,7 @@ dotmg - generate and manage .gitignore entries for the user
 
 .SH "SYNOPSIS"
 .PP
-dotmg command [argument...]
+dotmg command [argument]...
 
 .SH "DESCRIPTION"
 .PP
@@ -21,20 +21,24 @@ and bother with manually adding/removing listings.
 Add the specified file or directory argument(s) to not be
 ignored by git.
 
+.SS "clean-newlines"
+.PP
+Removes any empty newlines that are present
+in .gitignore file in the current directory.
+
+.SS "help"
+.PP
+Produce a help message.
+
 .SS "init"
 .PP
-Intialises an git repository in $HOUSE and writes a base
-.gitignore that ignores everything in $HOUSE.
+Intialises a git repository in $HOUSE and writes a base .gitignore
+that ignores everything in $HOUSE.
 
 .SS "init-gitignore"
 .PP
 Writes only a base .gitignore in the current
 directory.
-
-.SS "clean-newlines"
-.PP
-Removes any empty newlines that are present
-in .gitignore file in the current directory.
 
 .SH "EXAMPLES"
 .SS "Adding Files"

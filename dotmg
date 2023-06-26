@@ -117,11 +117,26 @@ dotmg-dont-ignore() {
 		done
 }
 
+dotmg-help() {
+		printf "Usage: dotmg command [argument]...\n\n"
+		printf "Commands\n\n"
+		printf "\tadd\tAdd the specified file or directory argument(s) to not be ignored by git\n"
+		printf "\tclean-newlines\tRemoves any empty newlines that are present in the .gitignore file in the current directory\n"
+		printf "\thelp\tDisplay help\n"
+		printf "\tinit\tInitialises a git repository in \$HOUSE and writes a base .gitignore in that directory\n"
+		printf "\tinit-gitignore\tWrites only a base .gitignore in the current directory\n"
+}
+
 dotmg-run () {
+		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && remove-empty-newlines && exit 0
+		[[ "$1" == "clean-newlines" ]] && check-gitignore-exists && remove-empty-newlines && exit 0
+		[[ "$1" == "help" ]] && dotmg-help && exit 0
 		[[ "$1" == "init" ]] && dotmg-init "$HOUSE" && exit 0
 		[[ "$1" == "init-gitignore" ]] && write-base-gitignore && exit 0
-		[[ "$1" == "add" ]] && shift && dotmg-dont-ignore "$@" && remove-empty-newlines && exit 0
-		[[ "$1" == "clean-newlines" ]] && check-gitignore-exists && remove-empty-newlines && exit 0 # seems useless right now. might remove later.
+
+		# well nothing else then dotmg is wrong used
+		printf "dotmg: Invalid use\n"
+		dotmg-help
 }
 
 dotmg-run "$@"

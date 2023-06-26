@@ -6,7 +6,7 @@
 dotmg - generate and manage .gitignore entries for the user
 
 * SYNOPSIS
-dotmg command [argument...]
+dotmg command [argument]...
 
 * DESCRIPTION
 This is a simple bash program that automates the generation and
@@ -19,17 +19,20 @@ and bother with manually adding/removing listings.
 Add the specified file or directory argument(s) to not be
 ignored by git.
 
+** clean-newlines
+Removes any empty newlines that are present
+in .gitignore file in the current directory.
+
+** help
+Produce a help message.
+
 ** init
-Intialises an git repository in $HOUSE and writes a base
-.gitignore that ignores everything in $HOUSE.
+Intialises a git repository in $HOUSE and writes a base .gitignore
+that ignores everything in $HOUSE.
 
 ** init-gitignore
 Writes only a base .gitignore in the current
 directory.
-
-** clean-newlines
-Removes any empty newlines that are present
-in .gitignore file in the current directory.
 
 * EXAMPLES
 
