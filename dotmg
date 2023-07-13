@@ -81,7 +81,13 @@ dotmg-dont-ignore() {
 		cd "$HOUSE" || error "could not switch to ${HOUSE}"
 		check-gitignore-exists
 		dirlist=""
-		for arg in "$@"; do
+		args="$*"
+		args_stripped="${args/$HOUSE/}" # strip the $HOME or user-directory prefix from path
+		# git only tracks files in the current repository, so when the variable is expanded
+		# and passed as an argument, git looks for /home/whatever inside $HOME which is
+		# the repository root.
+
+		for arg in $args_stripped; do
 				declare -a dirs
 				split "$arg" "/" dirs
 				declare -i len=0
