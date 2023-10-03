@@ -31,7 +31,8 @@ check-gitignore-exists() {
 }
 
 write-base-gitignore() {
-		printf "/*\n" > .gitignore
+    		printf "# generated with dotmg, see `man 1 dotmg` or https://github.com/icebarf/dotmg" > .gitignore
+		printf "/*\n" >> .gitignore
 }
 
 dont-ignore-this-dir() {
